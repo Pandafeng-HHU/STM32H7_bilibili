@@ -66,14 +66,14 @@ uint16_t timer8_period = 0;
 uint8_t flag_1s = 0;
 #define TIM8_PERIOD 65535
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  if (htim->Instance == TIM8) {
+    timer8_period ++;
+  }
   if (htim->Instance == TIM7) {
     fre_hz = __HAL_TIM_GET_COUNTER(&htim8) +timer8_period * (TIM8_PERIOD +1 );
     __HAL_TIM_SET_COUNTER(&htim8, 0);
     timer8_period = 0;
     flag_1s = 1;
-  }
-  if (htim->Instance == TIM8) {
-      timer8_period ++;
   }
 }
 
